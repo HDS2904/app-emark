@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="10dp"
+    xmlns:tools="http://schemas.android.com/tools">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvDetailTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:transitionName="transitionTitle"
+            android:textSize="24sp"
+            tools:text="Titulo" />
+
+        <TextView
+            android:id="@+id/tvDetailDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:transitionName="transitionDesc"
+            android:textSize="18sp"
+            tools:text="Descrip" />
+
+        <TextView
+            android:id="@+id/tvDetailPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:transitionName="transitionPrice"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:layout_gravity="end"
+            tools:text="$$$" />
+
+        <TextView
+            android:id="@+id/tvDetailDescLong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:text="@string/lorempsum" />
+
+        <Button
+            android:id="@+id/btn_detail_buy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="Registrar" />
+
+        <Button
+            android:id="@+id/btn_detail_mos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="Hello" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
