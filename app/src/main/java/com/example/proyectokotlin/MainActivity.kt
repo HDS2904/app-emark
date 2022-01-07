@@ -3,6 +3,7 @@ package com.example.proyectokotlin
 import android.database.sqlite.SQLiteOpenHelper
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.proyectokotlin.model.Product
@@ -15,6 +16,8 @@ import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.awaitResponse
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Exception
+import kotlin.properties.Delegates
 
 const val BASE_URL = "https://emark-backend-nodejs.herokuapp.com"
 
@@ -44,47 +47,43 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun consultDataApi(){
+//        getData() //SIN ITNER
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                var response = getRetrofit().create(ProductService::class.java).getProducts().awaitResponse()
+                if(response.isSuccessful){
+                    if(response.body() !== null){
+                        val data = response.body()!!
 
-//        GlobalScope.launch(Dispatchers.IO) {
-//            var response = getRetrofit().create(ProductService::class.java).getProducts().awaitResponse()
-//            if(response.isSuccessful){
-//                if(response.body() !== null){
-//                    val data = response.body()!!
-//                    Log.d("HAY INTER","BIENNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN")
-//
-//                    for ( ms in data.mensaje ){
-//                        val itemLog = ItemLoading(title = ms.nombre, desc = ms.descripcion, price = ms.precioUnidad)
-////                        val status = sqlEmark.insertData(itemLog)
-//                        Log.d("Data: ", itemLog.title)
-//                    }
-//                    Log.d("RESPUESTA: ", data.ok)
-//
-//                    withContext(Dispatchers.Main){
-//                        setListLayout(data.mensaje)
-//                    }
-//                }else {
-//                    val data = sqlEmark.allData()
-//                    setListLayout2(data)
-//                }
-//
-//
-//            }
-//        }
+                        for ( ms in data.mensaje ){
+                            val itemLog = ItemLoading(title = ms.nombre, desc = ms.descripcion, price = ms.precioUnidad)
+                            sqlEmark.insertData(itemLog)
+                            Log.d("Data: ", itemLog.title)
+                        }
+                        Log.d("RESPUESTA: ", data.ok)
+
+                        withContext(Dispatchers.Main){
+                            setListLayout(data.mensaje)
+                        }
+                    }else {
+                        val data = sqlEmark.allData()
+                        setListLayout2(data)
+                    }
 
 
+                }
+            }catch (error: Exception){
+                Log.d("SIN INTER","NOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+            }
+        }
 
+    }
 
-        val data = sqlEmark.allData()
-        setListLayout2(data)
-
-
-
-
-
-
-
-
-
+    fun getData() {
+        Handler().postDelayed({
+            val data = sqlEmark.allData()
+            setListLayout2(data)
+        }, 5000)
     }
 
     fun setListLayout(products: List<Product>){
@@ -100,7 +99,6 @@ class MainActivity : AppCompatActivity() {
 
 
     fun setListLayout2(products: List<ItemLoading>){
-
         //se prepara el contenido del reciclerView (AdapterLoading) y se aplica a la vista
         val adapter = AdapterLoading(products)
         rcView.adapter = adapter

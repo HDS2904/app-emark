@@ -60,34 +60,43 @@ class ItemDAO (private val context: Context): SQLiteOpenHelper(context, dbName, 
         }
     }
 
+//    fun insertBlockData(item: List<ItemLoading>) {
+//        val db = writableDatabase
+//        db?.execSQL("INSERT TABLE $tableName(" +
+//                "$col1 INTEGER PRIMARY KEY AUTOINCREMENT," +
+//                "$col2 TEXT NOT NULL," +
+//                "$col3 TEXT NOT NULL," +
+//                "$col4 REAL NOT NULL)")
+//    }
 
-//    fun updateData(item: ItemLoading,id: String){
-//        return  try {
-//            val db = this.writableDatabase
-//            val contentValues = ContentValues()
-//            contentValues.put(col1,id)
-//            contentValues.put(col2,item.title)
-//            contentValues.put(col2,item.desc)
-//            contentValues.put(col2,item.price)
-//            db.update(tableName,contentValues,"ID = ?", arrayOf(id))
-//            db.close()
-//            toast("Dato Modificado")
-//        }catch (e: Exception){
-//            toast("Dato No Modificado")
-//        }
-//    }
-//
-//    fun deleteData(id: String) {
-//        return  try {
-//            val db = writableDatabase
-//            db.delete(tableName,"ID = ?", arrayOf(id))
-//            db.close()
-//            toast("Dato Eliminado")
-//        }catch (e: Exception){
-//            toast("Dato No Eliminado")
-//        }
-//
-//    }
+
+    fun updateData(item: ItemLoading,id: String){
+        return  try {
+            val db = this.writableDatabase
+            val contentValues = ContentValues()
+            contentValues.put(col1,id)
+            contentValues.put(col2,item.title)
+            contentValues.put(col2,item.desc)
+            contentValues.put(col2,item.price)
+            db.update(tableName,contentValues,"ID = ?", arrayOf(id))
+            db.close()
+            toast("Dato Modificado")
+        }catch (e: Exception){
+            toast("Dato No Modificado")
+        }
+    }
+
+    fun deleteData(id: String) {
+        return  try {
+            val db = writableDatabase
+            db.delete(tableName,"ID = ?", arrayOf(id))
+            db.close()
+            toast("Dato Eliminado")
+        }catch (e: Exception){
+            toast("Dato No Eliminado")
+        }
+
+    }
 
     fun allData(): List<ItemLoading> {
         val items= mutableListOf<ItemLoading>()
